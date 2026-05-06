@@ -11,12 +11,16 @@ import {
 import './index.css'
 import Layouts from './Layouts.jsx'
 import Home from './Pages/Home.jsx'
+import Dashboard from './Pages/Dashboard.jsx'
+import History from './Pages/History.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layouts />}>
       {/* yahan child routes add karo */}
-      <Route path="/" element={<Home/>} />
+      <Route path="/home" element={<Home/>} />
+      <Route path="/dashboard" element={<Dashboard/>} />
+      <Route path="/history" element={<History/>} />
     </Route>
   )
 )
