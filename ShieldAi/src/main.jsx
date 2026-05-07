@@ -13,6 +13,7 @@ import Layouts from './Layouts.jsx'
 import Home from './Pages/Home.jsx'
 import Dashboard from './Pages/Dashboard.jsx'
 import History from './Pages/History.jsx'
+import Feedback from './Pages/Feedback.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
       <Route path="/home" element={<Home/>} />
       <Route path="/dashboard" element={<Dashboard/>} />
       <Route path="/history" element={<History/>} />
+      <Route path="/feedback" element={<Feedback/>} />
     </Route>
   )
 )
