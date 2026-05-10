@@ -14,6 +14,7 @@ import Home from './Pages/Home.jsx'
 import Dashboard from './Pages/Dashboard.jsx'
 import History from './Pages/History.jsx'
 import Feedback from './Pages/Feedback.jsx'
+import Login from './Pages/Login.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
       <Route path="/dashboard" element={<Dashboard/>} />
       <Route path="/history" element={<History/>} />
       <Route path="/feedback" element={<Feedback/>} />
+      <Route path="/login" element={<Login/>} />
     </Route>
   )
 )

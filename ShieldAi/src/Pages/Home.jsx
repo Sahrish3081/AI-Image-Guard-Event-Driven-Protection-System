@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AnimatedCard from "../assets/components/AnimatedCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faShield, faFingerprint, faUpload, faDownload } from "@fortawesome/free-solid-svg-icons";
 export default function Home() {
@@ -128,34 +129,26 @@ const steps = [
 
   <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
     {features.map((item, i) => (
-  <div key={i} className="group relative bg-[#121232] rounded-2xl p-[1px] overflow-hidden 
-    transition-all duration-500 hover:-translate-y-1">
+<AnimatedCard key={i}>
+  <div className="p-6">
 
-    {/* Glow */}
-    <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/40 to-purple-600/0 
-      opacity-0 group-hover:opacity-100 transition duration-500 blur-xl"></div>
-
-    {/* Card */}
-    <div className="relative bg-[#121232] rounded-2xl p-6">
-
-      {/* Icon */}
-     <div className="w-12 h-12 flex items-center justify-center rounded-full bg-purple-600/20 mb-3 mx-auto">
-  <FontAwesomeIcon icon={item.icon} className="text-purple-400 text-xl" />
-</div>
-
-      {/* Title */}
-      <h3 className="text-xl font-semibold">
-        {item.title}
-      </h3>
-
-      {/* Description */}
-      <p className="text-gray-400 mt-2 group-hover:text-gray-300 transition">
-        {item.desc}
-      </p>
-
+    <div className="w-12 h-12 flex items-center justify-center rounded-full bg-purple-600/20 mb-3 mx-auto">
+      <FontAwesomeIcon icon={item.icon} className="text-purple-400 text-xl" />
     </div>
-  </div>
+
+    <h3 className="text-xl font-semibold">
+      {item.title}
+    </h3>
+
+    <p className="text-gray-400 mt-2">
+      {item.desc}
+    </p>
+
+ 
+   </div>
+</AnimatedCard>
 ))}
+
   </div>
 </section>
 
@@ -165,66 +158,98 @@ const steps = [
 
   <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
     {steps.map((item, i) => (
-      <div
-        key={i}
-        className="group relative bg-[#121232] rounded-2xl p-[1px] overflow-hidden 
-        transition-all duration-500 hover:-translate-y-1"
-      >
-        {/* Glow */}
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/40 to-purple-600/0 
-        opacity-0 group-hover:opacity-100 transition duration-500 blur-xl"></div>
+      <AnimatedCard key={i}>
+  <div className="p-6">
 
-        {/* Card */}
-        <div className="relative bg-[#121232] rounded-2xl p-6">
+    <div className="w-12 h-12 flex items-center justify-center rounded-full bg-purple-600/20 mb-3 mx-auto">
+      <FontAwesomeIcon icon={item.icon} className="text-purple-400 text-xl" />
+    </div>
 
-          {/* Icon */}
-          <div className="w-12 h-12 flex items-center justify-center rounded-2xl 
-          bg-purple-600/20 mb-3 mx-auto transition group-hover:scale-110">
-            <FontAwesomeIcon icon={item.icon} className="text-gray-400 text-xl" />
-          </div>
+    <h3 className="text-xl font-semibold">
+      {item.title}
+    </h3>
 
-          {/* Title */}
-          <h3 className="text-xl font-semibold">
-            {item.title}
-          </h3>
+    <p className="text-gray-400 mt-2">
+      {item.desc}
+    </p>
 
-          {/* Description */}
-          <p className="text-gray-400 mt-2 group-hover:text-gray-300 transition">
-            {item.desc}
-          </p>
-
-        </div>
-      </div>
+  </div>
+</AnimatedCard>
     ))}
   </div>
 </section>
       {/* ================= PRICING ================= */}
       <section id="pricing" className="py-20 px-6 text-center">
-        <h2 className="text-3xl font-bold mb-10">Pricing</h2>
+  <h2 className="text-3xl font-bold mb-10">Pricing</h2>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+  <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
 
-          {/* Free Plan */}
-          <div className="bg-[#121232] p-6 rounded-xl">
-            <h3 className="text-xl font-bold">Free Plan</h3>
-            <p className="text-gray-400 mt-2">Basic protection</p>
-          </div>
+    {/* Free Plan */}
+    <AnimatedCard>
+      <div className="p-6 h-full">
+        <h3 className="text-xl font-bold">Free Plan</h3>
 
-          {/* Pro Plan */}
-          <div className="bg-purple-600 p-6 rounded-xl scale-105">
-            <h3 className="text-xl font-bold">Pro Plan</h3>
-            <p className="mt-2">Advanced protection</p>
-          </div>
+        <p className="text-gray-400 mt-2">
+          Basic protection
+        </p>
 
-          {/* Enterprise */}
-          <div className="bg-[#121232] p-6 rounded-xl">
-            <h3 className="text-xl font-bold">Enterprise</h3>
-            <p className="text-gray-400 mt-2">Custom solutions</p>
-          </div>
-
+        <div className="mt-6">
+          <span className="text-4xl font-bold">$0</span>
+          <span className="text-gray-400">/month</span>
         </div>
-      </section>
 
+        <button className="mt-6 w-full py-3 rounded-xl border border-purple-500/30 hover:bg-purple-500/10 transition">
+          Get Started
+        </button>
+      </div>
+    </AnimatedCard>
+
+    {/* Pro Plan */}
+    <AnimatedCard className="scale-105 border border-purple-500/40">
+      <div className="p-6 h-full bg-gradient-to-b from-purple-600/20 to-transparent rounded-2xl">
+
+        <div className="mb-3 inline-block px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs">
+          Most Popular
+        </div>
+
+        <h3 className="text-xl font-bold">Pro Plan</h3>
+
+        <p className="text-gray-300 mt-2">
+          Advanced protection
+        </p>
+
+        <div className="mt-6">
+          <span className="text-4xl font-bold">$19</span>
+          <span className="text-gray-400">/month</span>
+        </div>
+
+        <button className="mt-6 w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-90 transition">
+          Upgrade Now
+        </button>
+      </div>
+    </AnimatedCard>
+
+    {/* Enterprise */}
+    <AnimatedCard>
+      <div className="p-6 h-full">
+        <h3 className="text-xl font-bold">Enterprise</h3>
+
+        <p className="text-gray-400 mt-2">
+          Custom solutions
+        </p>
+
+        <div className="mt-6">
+          <span className="text-4xl font-bold">Custom</span>
+        </div>
+
+        <button className="mt-6 w-full py-3 rounded-xl border border-purple-500/30 hover:bg-purple-500/10 transition">
+          Contact Us
+        </button>
+      </div>
+    </AnimatedCard>
+
+  </div>
+</section>
       {/* ================= FOOTER ================= */}
       <footer className="py-10 text-center text-gray-400">
         © 2026 ShieldAI. All rights reserved.

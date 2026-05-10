@@ -1,30 +1,47 @@
-import React, { useState } from "react";
-import { MessageSquare, Star, Send } from "lucide-react";
+import { useEffect, useState } from "react";
+import AnimatedCard from "../assets/components/AnimatedCard";
+import { FaStar } from "react-icons/fa";
 
 export default function Feedback() {
+
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [rating, setRating] = useState(5);
 
-  const [feedbacks, setFeedbacks] = useState([
-    {
-      id: 1,
-      name: "Ayesha",
-      message:
-        "Amazing protection system. The dashboard UI feels modern and smooth.",
-      rating: 5,
-      date: "2 hours ago",
-    },
-    {
-      id: 2,
-      name: "Ali",
-      message:
-        "Very clean interface and easy image protection workflow.",
-      rating: 4,
-      date: "5 hours ago",
-    },
-  ]);
+  const [feedbacks, setFeedbacks] = useState([]);
 
+  // ================= LOAD FROM LOCAL STORAGE =================
+  useEffect(() => {
+    const stored = localStorage.getItem("shield_feedbacks");
+
+    if (stored) {
+      setFeedbacks(JSON.parse(stored));
+    } else {
+      const defaultFeedbacks = [
+        {
+          id: 1,
+          name: "Sahrish",
+          message: "Amazing protection system UI and smooth experience.",
+          rating: 5,
+        },
+        {
+          id: 2,
+          name: "Ali",
+          message: "Very modern dashboard and strong AI protection features.",
+          rating: 4,
+        },
+      ];
+
+      setFeedbacks(defaultFeedbacks);
+
+      localStorage.setItem(
+        "shield_feedbacks",
+        JSON.stringify(defaultFeedbacks)
+      );
+    }
+  }, []);
+
+  // ================= SUBMIT FEEDBACK =================
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -35,137 +52,190 @@ export default function Feedback() {
       name,
       message,
       rating,
-      date: "Just now",
     };
 
-    setFeedbacks([newFeedback, ...feedbacks]);
+    const updated = [newFeedback, ...feedbacks];
 
+    setFeedbacks(updated);
+
+    // SAVE
+    localStorage.setItem(
+      "shield_feedbacks",
+      JSON.stringify(updated)
+    );
+
+    // RESET
     setName("");
     setMessage("");
     setRating(5);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0b0f1f] to-[#0a0d18] text-white p-6">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">User Feedback</h1>
-          <p className="text-gray-400 text-sm">
-            Share your experience with ShieldAI protection system.
-          </p>
+    <section className="min-h-screen bg-[#0B0B1E] text-white px-6 py-20">
+
+      <h1 className="text-4xl font-bold text-center mb-14">
+        User Feedback
+      </h1>
+
+      <div className="grid lg:grid-cols-2 gap-10 max-w-7xl mx-auto">
+
+        {/* ================= LEFT SIDE FEEDBACK CARDS ================= */}
+
+        <div className="grid md:grid-cols-2 gap-6">
+
+          {feedbacks.map((item) => (
+
+            <AnimatedCard key={item.id}>
+
+              <div className="p-6 h-full">
+
+                {/* NAME */}
+                <h3 className="text-xl font-semibold mb-2">
+                  {item.name}
+                </h3>
+
+                {/* STARS */}
+                <div className="flex gap-1 mb-3">
+
+                  {[1, 2, 3, 4, 5].map((star) => (
+
+                    <FaStar
+                      key={star}
+                      className={`text-lg ${
+                        star <= item.rating
+                          ? "text-yellow-400"
+                          : "text-gray-600"
+                      }`}
+                    />
+
+                  ))}
+
+                </div>
+
+                {/* MESSAGE */}
+                <p className="text-gray-400 leading-relaxed">
+                  {item.message}
+                </p>
+
+              </div>
+
+            </AnimatedCard>
+
+          ))}
+
         </div>
 
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-purple-600 to-purple-500 flex items-center justify-center shadow-lg shadow-purple-900/30">
-          <MessageSquare />
-        </div>
-      </div>
+        {/* ================= RIGHT SIDE FORM ================= */}
 
-      <div className="grid lg:grid-cols-3 gap-6">
-        {/* Feedback Form */}
-        <div className="lg:col-span-1 bg-[#0f1429] border border-gray-800 rounded-2xl p-5 h-fit sticky top-6 order-1 lg:order-2">
-          <h2 className="text-lg font-medium mb-5">Leave Feedback</h2>
+        <AnimatedCard>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Name */}
-            <div>
-              <label className="text-sm text-gray-400 block mb-2">
-                Your Name
-              </label>
+          <div className="p-8">
+
+            <h2 className="text-2xl font-bold mb-6">
+              Share Your Feedback
+            </h2>
+
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-5"
+            >
+
+              {/* NAME */}
               <input
                 type="text"
-                placeholder="Enter your name"
+                placeholder="Your Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full bg-[#11182f] border border-gray-700 rounded-xl px-4 py-3 outline-none focus:border-purple-500 text-sm"
+                className="
+                  w-full
+                  bg-[#121232]
+                  border border-purple-500/20
+                  rounded-xl
+                  px-4
+                  py-3
+                  outline-none
+                  focus:border-purple-500
+                "
               />
-            </div>
 
-            {/* Feedback */}
-            <div>
-              <label className="text-sm text-gray-400 block mb-2">
-                Your Feedback
-              </label>
+              {/* MESSAGE */}
               <textarea
-                rows="5"
                 placeholder="Write your feedback..."
+                rows="5"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full bg-[#11182f] border border-gray-700 rounded-xl px-4 py-3 outline-none focus:border-purple-500 text-sm resize-none"
+                className="
+                  w-full
+                  bg-[#121232]
+                  border border-purple-500/20
+                  rounded-xl
+                  px-4
+                  py-3
+                  outline-none
+                  focus:border-purple-500
+                "
               />
-            </div>
 
-            {/* Rating */}
-            <div>
-              <label className="text-sm text-gray-400 block mb-3">
-                Rating
-              </label>
+              {/* STARS */}
+              <div>
 
-              <div className="flex gap-2">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <button
-                    type="button"
-                    key={star}
-                    onClick={() => setRating(star)}
-                    className={`p-2 rounded-lg border transition ${
-                      rating >= star
-                        ? "bg-purple-600 border-purple-600"
-                        : "border-gray-700 bg-[#11182f]"
-                    }`}
-                  >
-                    <Star size={16} fill={rating >= star ? "white" : "none"} />
-                  </button>
-                ))}
-              </div>
-            </div>
+                <p className="mb-3 text-gray-300">
+                  Your Rating
+                </p>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-purple-500 hover:opacity-90 transition flex items-center justify-center gap-2 font-medium"
-            >
-              <Send size={16} /> Submit Feedback
-            </button>
-          </form>
-        </div>
+                <div className="flex gap-2">
 
-        {/* Feedback Cards */}
-        <div className="lg:col-span-2 grid md:grid-cols-2 gap-5 order-2 lg:order-1">
-          {feedbacks.map((feedback) => (
-            <div
-              key={feedback.id}
-              className="bg-[#0f1429] border border-gray-800 rounded-2xl p-5 hover:border-purple-500/40 transition"
-            >
-              {/* Top */}
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  {/* Avatar */}
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 to-purple-500 flex items-center justify-center text-lg font-semibold">
-                    {feedback.name.charAt(0).toUpperCase()}
-                  </div>
+                  {[1, 2, 3, 4, 5].map((star) => (
 
-                  <div>
-                    <h3 className="font-medium">{feedback.name}</h3>
-                    <p className="text-xs text-gray-400">{feedback.date}</p>
-                  </div>
-                </div>
+                    <button
+                      type="button"
+                      key={star}
+                      onClick={() => setRating(star)}
+                    >
 
-                {/* Stars */}
-                <div className="flex gap-1">
-                  {[...Array(feedback.rating)].map((_, i) => (
-                    <Star key={i} size={14} fill="white" />
+                      <FaStar
+                        className={`text-2xl transition ${
+                          star <= rating
+                            ? "text-yellow-400"
+                            : "text-gray-600"
+                        }`}
+                      />
+
+                    </button>
+
                   ))}
+
                 </div>
+
               </div>
 
-              {/* Message */}
-              <p className="text-gray-300 leading-relaxed text-sm">
-                {feedback.message}
-              </p>
-            </div>
-          ))}
-        </div>
+              {/* SUBMIT BUTTON */}
+              <button
+                type="submit"
+                className="
+                  w-full
+                  py-3
+                  rounded-xl
+                  bg-gradient-to-r
+                  from-purple-600
+                  to-indigo-600
+                  hover:opacity-90
+                  transition
+                  hover:-translate-y-1
+                  duration-300
+                "
+              >
+                Submit Feedback
+              </button>
+
+            </form>
+
+          </div>
+
+        </AnimatedCard>
+
       </div>
-    </div>
+
+    </section>
   );
 }
